@@ -223,4 +223,24 @@ describe('create.ImportDeclaration', () => {
     expect(getFilename).toBeCalledTimes(1)
     expect(report).not.toBeCalled()
   })
+
+  it('should skip import type path if ignoreImportType is true', () => {
+    resolveImportPath.mockReturnValue('src/components/ui/TextType')
+    const getFilename = jest.fn(() => path.join(process.cwd(), 'src/components/ui/aaa.ts'))
+    const report = jest.fn()
+    const {ImportDeclaration: checkImport} = create({
+      options: [
+        [{module: 'src/components/ui', allowReferenceFrom: ['src/bbb'], allowSameModule: true}],
+        {ignoreImportType: true},
+      ],
+      getFilename,
+      report,
+    })
+
+    checkImport({source: {value: '@/components/ui/TextType'}, importKind: 'type'})
+
+    expect(resolveImportPath).not.toBeCalled()
+    expect(getFilename).not.toBeCalled()
+    expect(report).not.toBeCalled()
+  })
 })
