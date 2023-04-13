@@ -68,13 +68,8 @@ module.exports = {
     const ignoreImportType = options.ignoreImportType ? options.ignoreImportType : false
 
     function checkImport(node) {
-      console.log(`ignoreImportType: ${ignoreImportType}`)
-      console.log(`node.importKind: ${node.importKind}`)
-      console.log(`typeof node.importKind: ${typeof node.importKind}`)
-      console.log(`node.importKind === 'type': ${node.importKind === 'type'}`)
       if (ignoreImportType && node.importKind === 'type') return
 
-      console.log(`throw if`)
       const fileFullPath = context.getFilename()
       const relativeFilePath = normalize(path.relative(process.cwd(), fileFullPath))
       const importPath = resolveImportPath(node.source.value, resolveRelativeImport ? relativeFilePath : null, pathIndexMap)
