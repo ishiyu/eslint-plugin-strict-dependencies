@@ -52,7 +52,10 @@ module.exports = {
           },
           pathIndexMap: {
             type: 'object'
-          }
+          },
+          ignoreImportType: {
+            type: 'boolean'
+          },
         },
       },
     ],
@@ -62,8 +65,11 @@ module.exports = {
     const options = context.options.length > 1 ? context.options[1] : {}
     const resolveRelativeImport = options.resolveRelativeImport
     const pathIndexMap = options.pathIndexMap ? options.pathIndexMap : {}
+    const ignoreImportType = options.ignoreImportType ? options.ignoreImportType : false
 
     function checkImport(node) {
+      if (ignoreImportType && node.importKind === 'type') return
+
       const fileFullPath = context.getFilename()
       const relativeFilePath = normalize(path.relative(process.cwd(), fileFullPath))
       const importPath = resolveImportPath(node.source.value, resolveRelativeImport ? relativeFilePath : null, pathIndexMap)
