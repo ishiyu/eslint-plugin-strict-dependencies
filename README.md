@@ -44,6 +44,8 @@ npm install eslint-plugin-strict-dependencies --save-dev
       }
       ```
     - `pathIndexMap = { "*": 1 } `: `"bbb/*"` is used.
+- ignoreImportType: `boolean[default = false]`
+  - If true, ignore the check for `import type` syntax.
 
 ## Usage
 
@@ -89,6 +91,7 @@ npm install eslint-plugin-strict-dependencies --save-dev
     // {
     //   "resolveRelativeImport": true
     //   "pathIndexMap": { "*": 1 }
+    //   "ignoreImportType": true
     // }
   ]
 }
